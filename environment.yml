@@ -1,0 +1,9 @@
+name: toksearch-benchmark
+
+channels:
+  - conda-forge
+  - ga-fdp
+
+dependencies:
+  - toksearch_d3d
+  - xarray
