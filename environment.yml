@@ -1,4 +1,4 @@
-name: toksearch-benchmark
+name: toksearch_benchmark
 
 channels:
   - conda-forge
@@ -6,4 +6,9 @@ channels:
 
 dependencies:
   - toksearch_d3d
-  - xarray
+  - jupyterlab=4.4.10
+  - matplotlib=3.10.7
+  - xarray=2025.10.1
+  - scipy=1.16.3
+  - netCDF4=1.7.3
+  - pyspark=4.0.1

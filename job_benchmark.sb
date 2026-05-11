@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+#SBATCH --job-name="toksearch_benchmark"
+#SBATCH --output="out_tok_bench.%j.%N.out"
+#SBATCH --partition=shared
+#SBATCH --nodes=1
+#SBATCH --ntasks-per-node=8
+#SBATCH --cpus-per-task=4
+#SBATCH --mem=32G
+#SBATCH --account=gat100
+#SBATCH -t 00:30:00
+
+
+module purge
+module load slurm
+module load cpu
+
+date
+#load the environment
+#eval "$(micromamba shell hook --shell bash)"
+source ~/.bashrc
+conda activate toksearch_benchmark
+
+export SCRATCH_DIR=/scratch/javierhn/job_$SLURM_JOB_ID
+export WORKDIR=/home/javierhn/models/benchmark_toksearch
+#cd /scratch/$USER/job_$SLURM_JOBID
+
+#chunking to manage memory usage
+export CHUNK_SIZE=100
+export NUM_WORKERS=20
+
+cd $WORKDIR
+
+srun fdp run python src/pipeline_rtefit.py --chunk_size $CHUNK_SIZE --num_workers $NUM_WORKERS
+
+conda deactivate
+
+#### List scratch directory
+#ls $SCRATCH_DIR
